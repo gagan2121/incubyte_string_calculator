@@ -4,6 +4,9 @@ class StringCalculator
 
     separators = get_separators(str)
     str = get_numbers(separators, str)
+
+    negative_numbers = negative_numbers?(str)
+    raise negative_error(negative_numbers) unless negative_numbers.empty?
     
     str.reduce(:+)
   end
@@ -22,5 +25,13 @@ class StringCalculator
 
   def includes_delimitier?(string)
     string.start_with?('//')
+  end
+
+  def negative_numbers?(str)
+      str.select{ |n| n if n.negative? }
+  end
+    
+  def negative_error(numbers)
+    "negative numbers not allowed #{numbers.join(',')}"
   end
 end
